@@ -14,11 +14,11 @@ The proof is made in your browser, and nobody holds your money.
 <br>
 
 [![Status](https://img.shields.io/badge/mainnet-live-F2B632?style=flat-square&labelColor=141414)](https://app.stynx.cash)
-[![Token](https://img.shields.io/badge/%24STYNX-not%20issued-F8F7F2?style=flat-square&labelColor=141414)](#token-at-a-glance)
+[![Token](https://img.shields.io/badge/%24STYNX-not%20issued-F8F7F2?style=flat-square&labelColor=141414)](#stynx-token)
 [![Chain](https://img.shields.io/badge/Robinhood%20Chain-4663-F2B632?style=flat-square&labelColor=141414)](https://stynx.cash/docs)
 [![Pool](https://img.shields.io/badge/Zcash-shielded%20pool-F2B632?style=flat-square&labelColor=141414)](#how-a-crossing-works)
-[![Core](https://img.shields.io/badge/core-Rust%20%E2%86%92%20WebAssembly-F8F7F2?style=flat-square&labelColor=141414)](documents/stynx-kernel)
-[![App](https://img.shields.io/badge/Next.js-16.3.8-F8F7F2?style=flat-square&labelColor=141414)](documents/stynx-console)
+[![Proving](https://img.shields.io/badge/proofs-in%20your%20browser-F8F7F2?style=flat-square&labelColor=141414)](#privacy-by-design)
+[![Custody](https://img.shields.io/badge/custody-none-F8F7F2?style=flat-square&labelColor=141414)](#privacy-by-design)
 
 [**Site**](https://stynx.cash) · [**App**](https://app.stynx.cash) · [**Docs**](https://stynx.cash/docs) · [**X @stynxcash**](https://x.com/stynxcash) · [**GitHub**](https://github.com/stynxcash)
 
@@ -26,13 +26,15 @@ The proof is made in your browser, and nobody holds your money.
 
 ---
 
-## What is Stynx
+## About
 
-Every wallet on a public chain is a glass box. A fresh wallet has to be funded by something, and the explorer prints that something on its first line: your old wallet, for good. Stynx cuts that line. Wallet A sends USDG or ETH on Robinhood Chain, the swap rail turns it into ZEC, your browser shields it into Zcash's pool with a zero-knowledge proof, and after a wait it leaves in uneven pieces to a wallet that has never been seen before: the Ghost.
+Every wallet on a public chain is a glass box. A fresh wallet has to be funded by something, and every explorer prints that something on its first line: your old wallet, for good. Wallet watchers and copy-traders read that line in minutes. An exchange hop trades it for an account record, a bridge carries it to another chain, and a new privacy pool opens with a crowd of one.
 
-- **Borrowed depth.** Stynx builds no pool. It routes through the one Zcash has been filling for years: about 4.9M ZEC shielded and 1,100 exits on a single day.
+Stynx cuts that line. Wallet A sends USDG or ETH on Robinhood Chain, the swap rail turns it into ZEC, your browser shields it into Zcash's pool with a zero-knowledge proof, and after a wait it leaves in uneven pieces to a wallet that has never been seen before: **the Ghost**.
+
+- **Borrowed depth.** Privacy is a crowd, and a crowd takes years to gather. Stynx builds no pool. It routes through the one Zcash has been filling for years: about 4.9M ZEC shielded, 29% of supply, and 1,100 exits on a single day.
 - **Nothing to hold.** No pool contract, no router contract, no relayer, no custody. The server keeps no user tables and has no exit endpoint at all.
-- **Honest numbers.** The Crowd Meter counts look-alike exits before you pay, says which layer it does not count yet, and the landing page lists what stays visible above the fold.
+- **Honest numbers.** The Crowd Meter counts look-alike exits before you pay and says which layer it does not count yet. What stays visible is listed above the fold, not buried in the docs.
 
 <div align="center">
 <img src="assets/hidden-visible.png" alt="What is hidden and what is not: Stynx separates two wallets, it does not erase either one" width="100%">
@@ -49,19 +51,88 @@ Every wallet on a public chain is a glass box. A fresh wallet has to be funded b
 </tr>
 </table>
 
-## Highlights
+## Features
+
+### 🛣️ The Crossing
+
+Pick an amount, an asset and a wait. The planner shows the full cost and the crowd for your size before anything moves, and nothing is sent until the crossing's key is written down. The toll is taken once, on the way in. The way out is free.
+
+<table>
+<tr>
+<td width="70%"><img src="assets/screen-app-cross.png" alt="Plan the crossing: live cost and crowd at app.stynx.cash" width="100%"></td>
+<td width="30%"><img src="assets/screen-mobile-app-cross.png" alt="The crossing planner on a phone" width="100%"></td>
+</tr>
+</table>
+
+### 📊 Crowd Meter
+
+Type the size of one exit piece and see how many exits of a similar size left Zcash's shielded pool in the last day, three days or week. The count is made in your browser from public blocks: the size you type is sent to nobody. A grade of **Thin**, **Fair** or **Deep** sits next to it, and a Thin grade never blocks you. It tells you the fix: wait longer or cut smaller pieces.
+
+<img src="assets/screen-app-crowd.png" alt="The live Crowd Meter: every dot is one exit, the lit ones look like yours" width="100%">
+
+<img src="assets/crowd-layer1.png" alt="Similar exits from Zcash's shielded pool by size and wait, measured 2 October 2026" width="100%">
+
+| Piece size | 24 hours | 3 days | 7 days |
+|---|---:|---:|---:|
+| $100 | 28 | 74 | 178 |
+| $1,000 | 23 | 79 | 183 |
+| $5,000 | 10 | 34 | 117 |
+| $10,000 | 26 | 67 | 135 |
+
+<sub>Exits within 10% of the piece size, measured from public Zcash blocks on 2 October 2026. Layer 2, wallets on Robinhood Chain funded from ZEC, is not counted yet and the meter says so.</sub>
+
+### 🔍 Glass Box check
+
+Paste a wallet you already use and read its funding trail the way anyone can: the first transfer that ever reached it, and the first that reached the wallet that sent it. Two steps of public history are enough to tie most new wallets to an old one. The page warns you never to paste a wallet you mean to keep apart.
+
+<img src="assets/screen-app-glassbox.png" alt="Glass Box check: every wallet is a glass box" width="100%">
+
+### 👻 The Ghost and the exit planner
+
+The far side of a crossing is a wallet the app makes for you, new by construction, with 12 words of its own. The exit leaves in two uneven pieces (three above $4,000), spaced 40 minutes to 3 hours apart, and no piece may sit within 3% of what went in. Part of it can stay shielded for a later Ghost, so no single wallet ever receives the whole amount.
+
+<img src="assets/habits.png" alt="The rules the app enforces: wait, split, reshape, stagger, remainder, fresh, once" width="100%">
+
+### 🚪 Second door
+
+Already hold ZEC? Pay a one-time deposit address from your shielded balance and ETH or USDG arrives in the Robinhood Chain wallet you name. This door is free, because an arrival through it looks exactly like the last leg of a crossing: every holder who uses it is cover for everyone who crossed.
+
+<img src="assets/screen-app-door.png" alt="Second door: arrive on Robinhood Chain with ZEC, no toll" width="100%">
+
+### 🔑 Your key stays on your device
+
+Every crossing has its own random key, shown once as 24 words. Three of them are typed back before anything is paid. There is no account and no signature to phish: lose the browser, type the 24 words on Restore, and the wallet core reads the chain until every note is found again. Stynx never receives a key, a seed, or anything that could derive one.
+
+<table>
+<tr>
+<td width="50%"><img src="assets/screen-app-desk.png" alt="Crossings on this device: kept in the browser that made them" width="100%"></td>
+<td width="50%"><img src="assets/screen-app-restore.png" alt="Restore a crossing from its 24 words" width="100%"></td>
+</tr>
+<tr>
+<td align="center"><sub>Crossings live in the browser that made them</sub></td>
+<td align="center"><sub>Restore one anywhere from its 24 words</sub></td>
+</tr>
+</table>
+
+### 🎫 One toll, printed before you pay
+
+0.30% of the entry, the rail's own fee included, shown above the button with every other cost. Exits are free and carry no Stynx tag, which is what lets them sit among other arrivals.
+
+<img src="assets/screen-lp-toll.png" alt="The toll board and a live cost breakdown for a $1,000 crossing" width="100%">
+
+## At a glance
 
 | | |
 |---|---|
 | **Route** | Robinhood Chain → Zcash shielded pool → Robinhood Chain |
-| **Entry assets** | USDG, ETH (exits to ETH or USDG) |
+| **Assets** | In with USDG or ETH, out to ETH or USDG |
 | **Per crossing** | $50 minimum, $10,000 maximum |
 | **Wait** | 6 h, 24 h, 72 h (default) or 7 days |
-| **Exit** | 2 uneven pieces, 3 above $4,000, spaced 40 minutes to 3 hours apart |
-| **Toll** | 0.30% once, on the way in, rail fee included. The way out is free |
-| **Keys** | A random key shown as 24 words, three typed back before anything is paid |
-| **Proving** | In the browser: Rust compiled to WebAssembly, 6 threads |
-| **Server** | Stateless. Sees the entry, never the Ghost, an exit size or an exit quote |
+| **Exit** | 2 uneven pieces, 3 above $4,000, 40 minutes to 3 hours apart |
+| **Toll** | 0.30% once, on the way in. Exit and second door are free |
+| **Timing** | About 2.5 minutes in, about 7.5 minutes per exit piece |
+| **Keys** | A random key per crossing, written as 24 words |
+| **Proofs** | Made in your browser, on 6 threads |
 | **Status** | Site and app live on mainnet since 2 October 2026. Token not issued |
 
 ## How a crossing works
@@ -84,72 +155,13 @@ Every wallet on a public chain is a glass box. A fresh wallet has to be funded b
       the public trail stops here ─────────▲
 ```
 
-<table>
-<tr>
-<td width="68%"><img src="assets/screen-app-cross.png" alt="The crossing planner at app.stynx.cash with live cost and crowd" width="100%"></td>
-<td width="32%"><img src="assets/screen-mobile-app-cross.png" alt="The crossing planner on a phone" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><sub>Plan the crossing: live cost and crowd, nothing moves until the key is written down</sub></td>
-<td align="center"><sub>The same planner on a phone</sub></td>
-</tr>
-</table>
-
-## The rules the app enforces
-
-A shielded pool is only as private as the habits around it. Peer-reviewed analysis of Zcash (Kappos et al., USENIX Security 2018) showed that the same amount going in and out after a short stay shrinks the crowd. Stynx turns the opposite habits into defaults.
-
-<img src="assets/habits.png" alt="Wait, split, reshape, stagger, remainder, fresh, once" width="100%">
-
-## Count the crowd before you pay
-
-<img src="assets/crowd-layer1.png" alt="Similar exits from Zcash's shielded pool by size and wait, measured 2 October 2026" width="100%">
-
-| Piece size | 24 hours | 3 days | 7 days |
-|---|---:|---:|---:|
-| $100 | 28 | 74 | 178 |
-| $1,000 | 23 | 79 | 183 |
-| $5,000 | 10 | 34 | 117 |
-| $10,000 | 26 | 67 | 135 |
-
-<sub>Exits within 10% of the piece size, measured from public Zcash blocks on 2 October 2026. Grade: Thin under 25, Fair 25 to 99, Deep from 100. Layer 2, wallets on Robinhood Chain funded from ZEC, is not counted yet and the meter says so.</sub>
-
-<img src="assets/screen-app-crowd.png" alt="The live Crowd Meter at app.stynx.cash" width="100%">
-
-## Architecture
+## Privacy by design
 
 <img src="assets/architecture.png" alt="Everything private runs in the browser: interface, records, exit planner and wallet core; the server sees the entry only" width="100%">
 
-Keys, proofs, the Ghost, the exit pieces and their timing are decided in the browser. The server prices the entry, checks the wallet named on a quote against the public sanctions list, and serves public chain data. Two public Zcash light nodes from different operators split the work: one is asked about the entry side, the other gets the releases.
+Keys, proofs, the Ghost, the exit pieces and their timing are decided in the browser and nowhere else. The server prices the entry, checks the wallet named on a quote against the public sanctions list, and serves public chain data. Two public Zcash light nodes from different operators split the work, so neither is ever told about both sides.
 
-## Repository layout
-
-| Repository | What it holds |
-|---|---|
-| [`stynx-kernel`](documents/stynx-kernel) | The wallet core (Rust → WebAssembly) and the route rules, with a C4 system design and a tested `route-rules` crate |
-| [`stynx-treatise`](documents/stynx-treatise) | The treatise (whitepaper) and the STRIDE threat model: what is hidden, what is not, and how to check |
-| [`stynx-conduit`](documents/stynx-conduit) | The public API of app.stynx.cash, its full reference and a typed TypeScript client |
-| [`stynx-console`](documents/stynx-console) | The crossing desk and the landing page: a screen-by-screen tour, the design language and a source skeleton |
-| [`stynx-observatory`](documents/stynx-observatory) | How the crowd on Zcash is measured, the 2 October snapshot and a script that checks the meter's numbers |
-
-Marketing collateral in this workspace:
-
-| Folder | Contents |
-|---|---|
-| [`Caption/`](Caption) | `CAPTION.md` (29 long-form captions) and `CAPTION-SHORT.md` (30 operator-log posts) |
-| [`Article/`](Article) | `X-Article.md` (three long-form X Articles) |
-
-## Tech stack
-
-| Layer | Technology |
-|---|---|
-| Wallet core | Rust, `wasm-bindgen`, `wasm-bindgen-rayon` (threaded proving), built from the open-source zenvelope crate (MIT) |
-| Zcash access | Public lightwalletd nodes over gRPC-web, compact blocks only |
-| App and landing page | Next.js 16.3.8, React 19.3, Tailwind 4, TypeScript |
-| Local records | IndexedDB with strict durability, Web Locks |
-| Wallet connection | EIP-1193 wallets on Robinhood Chain (chain 4663) |
-| Swap rail | NEAR Intents 1Click |
-| Hosting | Non-root containers behind a TLS reverse proxy and an edge network |
+<img src="assets/who-sees-what.png" alt="Who can see what: the public, the Stynx server, the swap rail and the two light nodes" width="100%">
 
 ## Roadmap
 
@@ -164,7 +176,7 @@ Marketing collateral in this workspace:
 | 4 · Upgrade | months 3 to 6 | Exit through a second chain, fee split in an ownerless contract, independent review | Planned |
 | 5 · Ecosystem | months 6 to 12 | Embedded crossing for wallets and terminals, community light nodes | Planned |
 
-## Token at a glance
+## $STYNX token
 
 <img src="assets/token.png" alt="$STYNX: 1,000,000,000 fixed supply, zero team allocation, net toll 50% burn, 30% operations, 20% security" width="100%">
 
@@ -180,7 +192,7 @@ Marketing collateral in this workspace:
 
 <img src="assets/tiers.png" alt="Toll classes: Visitor 0.30%, Drifter 0.24%, Phantom 0.18%, Wraith 0.12%" width="100%">
 
-The token lowers the toll and opens deeper Glass Box traces. It never buys privacy: waits, split rules, limits and the crowd are the same for every wallet.
+Holding lowers the toll and opens deeper Glass Box traces. It never buys privacy: waits, split rules, limits and the crowd are the same for every wallet.
 
 <img src="assets/flywheel.png" alt="Token flywheel: crossings, tolls, buyback and burn, lower toll, deeper layer 2" width="100%">
 
@@ -190,37 +202,17 @@ The token lowers the toll and opens deeper Glass Box traces. It never buys priva
 > **$STYNX is not issued yet.** Any token using the name today is not ours.
 > The contract address will appear on [stynx.cash](https://stynx.cash) and [@stynxcash](https://x.com/stynxcash) only.
 > There is no presale, no whitelist and no allocation to buy. Anyone who DMs you about one is a scammer.
-> Stynx never asks for your 24 words. Anything a stranger sends you is a scam.
+> Stynx never asks for your 24 words.
 
-## Quick start
+## Links
 
-The parts of this workspace that run on their own:
-
-```bash
-# route rules: limits, planner checks, crowd grade, toll classes
-cd documents/stynx-kernel/crates/route-rules && cargo test
-
-# check the live Crowd Meter's numbers yourself
-node documents/stynx-observatory/scripts/crowd-check.mjs --usd 1000 --hours 72
-
-# typed client for the public API
-cd documents/stynx-conduit/packages/client && npm install && npm test
-```
-
-Or skip the terminal: open [app.stynx.cash/crowd](https://app.stynx.cash/crowd), type an amount and count the crowd. No wallet needed.
-
-## Reference links
-
-| Resource | Link |
+| | |
 |---|---|
 | Landing page | https://stynx.cash |
 | The app | https://app.stynx.cash |
 | Docs: what is hidden, what is not | https://stynx.cash/docs |
 | X | https://x.com/stynxcash |
 | GitHub | https://github.com/stynxcash |
-| Zcash shielded pools | https://z.cash |
-| NEAR Intents | https://near.org/intents |
-| Kappos et al., USENIX Security 2018 (Zcash usage patterns) | https://www.usenix.org/conference/usenixsecurity18/presentation/kappos |
 
 ---
 
